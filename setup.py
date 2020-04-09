@@ -5,10 +5,11 @@ from setuptools import setup
 
 version = '0.1.0.dev0'
 
-
+# This package relies on PyOpenSSL, requests, and six, however, it isn't
+# specified here to avoid masking the more specific request requirements in
+# acme. See https://github.com/pypa/pip/issues/988 for more info.
 install_requires = [
     'certbot>=1.1.0',
-    'requests>=2.23.0',
     'setuptools',
     'zope.interface',
 ]
