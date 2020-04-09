@@ -10,8 +10,10 @@ subsequently removing, TXT records using the Hetzner DNS API.
 There is no pypi distribution yet. You can install this plugin via pip directly from this repo though:
 
 ```
-pip install -e 
+pip install -e git+https://github.com/ctrlaltcoop/certbot-dns-hetzner.git
 ```
+
+A more sophisticated versioning and pypi distribution is to follow
 
 ## Usage
 
