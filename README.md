@@ -1,6 +1,7 @@
 # Hetzner DNS Authenticator certbot plugin
 [![codecov](https://codecov.io/gh/ctrlaltcoop/certbot-dns-hetzner/branch/master/graph/badge.svg)](https://codecov.io/gh/ctrlaltcoop/certbot-dns-hetzner)
 ![Tests, Coverage](https://github.com/ctrlaltcoop/certbot-dns-hetzner/workflows/Tests,%20Coverage/badge.svg?branch=master)
+[![PyPI version](https://badge.fury.io/py/certbot-dns-hetzner.svg)](https://badge.fury.io/py/certbot-dns-hetzner)
 
 This certbot plugin automates the process of
 completing a dns-01 challenge by creating, and
