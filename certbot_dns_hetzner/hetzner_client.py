@@ -74,10 +74,10 @@ class _HetznerClient:
             url="{0}/records".format(HETZNER_API_ENDPOINT),
             headers=self._headers,
             data=json.dumps({
-                "value": name,
+                "value": value,
                 "ttl": ttl,
                 "type": record_type,
-                "name": value,
+                "name": name,
                 "zone_id": zone_id
             })
         )
