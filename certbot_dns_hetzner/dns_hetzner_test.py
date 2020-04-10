@@ -10,22 +10,20 @@ from certbot.plugins import dns_test_common
 from certbot.plugins.dns_test_common import DOMAIN
 from certbot.tests import util as test_util
 
+from certbot_dns_hetzner.fakes import FAKE_API_TOKEN, FAKE_RECORD
 from certbot_dns_hetzner.hetzner_client import _ZoneNotFoundException
-
-FAKE_API_TOKEN = 'XXXXXXXXXXXXXXXXXXXxxx'
-FAKE_RECORD = {
-    "record": {
-        'id': "123Fake",
-    }
-}
 
 
 class AuthenticatorTest(
-    test_util.TempDirTestCase, dns_test_common.BaseAuthenticatorTest
+        test_util.TempDirTestCase,
+        dns_test_common.BaseAuthenticatorTest
 ):
+    """
+    Test for Hetzner DNS Authenticator
+    """
     def setUp(self):
         super(AuthenticatorTest, self).setUp()
-        from certbot_dns_hetzner.dns_hetzner import Authenticator
+        from certbot_dns_hetzner.dns_hetzner import Authenticator  # pylint: disable=import-outside-toplevel
 
         path = os.path.join(self.tempdir, 'fake_credentials.ini')
         dns_test_common.write(
@@ -50,7 +48,7 @@ class AuthenticatorTest(
         self.mock_client.add_record.return_value = FAKE_RECORD
         self.auth.perform([self.achall])
         self.mock_client.add_record.assert_called_with(
-            DOMAIN,  'TXT', '_acme-challenge.' + DOMAIN + '.', mock.ANY, mock.ANY
+            DOMAIN, 'TXT', '_acme-challenge.' + DOMAIN + '.', mock.ANY, mock.ANY
         )
         self.assertEqual(self.auth.record_id, FAKE_RECORD['record']['id'])
 
@@ -61,10 +59,11 @@ class AuthenticatorTest(
             self.auth.perform, [self.achall]
         )
         self.mock_client.add_record.assert_called_with(
-            DOMAIN,  'TXT', '_acme-challenge.' + DOMAIN + '.', mock.ANY, mock.ANY
+            DOMAIN, 'TXT', '_acme-challenge.' + DOMAIN + '.', mock.ANY, mock.ANY
         )
 
     def test_cleanup(self):
+        self.mock_client.add_record.return_value = FAKE_RECORD
         # _attempt_cleanup | pylint: disable=protected-access
         self.auth.perform([self.achall])
         self.auth._attempt_cleanup = True

@@ -2,3 +2,6 @@
 .idea
 __pycache__
 certbot_dns_hetzner.egg-info
+.tox
+*.pyc
+.coverage

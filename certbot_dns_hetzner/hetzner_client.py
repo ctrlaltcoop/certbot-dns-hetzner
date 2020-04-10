@@ -1,5 +1,8 @@
-import requests
+"""
+A Hetzner helper class to wrap the API relevant for the functionality in this plugin
+"""
 import json
+import requests
 
 HETZNER_API_ENDPOINT = 'https://dns.hetzner.com/api/v1'
 
@@ -29,7 +32,7 @@ class _RecordNotFoundException(_HetznerException):
 
 class _NotAuthorizedException(_HetznerException):
     def __init__(self, *args):
-        super(_NotAuthorizedException, self).__init__('Malformed authorization or invalid API token')
+        super(_NotAuthorizedException, self).__init__('Malformed authorization or invalid API token', *args)
 
 
 class _HetznerClient:
@@ -52,7 +55,7 @@ class _HetznerClient:
             "Auth-API-Token": self.token,
         }
 
-    def add_record(self, domain, record_type, name, value, ttl):
+    def add_record(self, domain, record_type, name, value, ttl):  # pylint: disable=too-many-arguments
         """
         API call to add record to zone matching ``domain`` to your Hetzner Account, while specifying ``record_type``,
         ``name``, ``value`` and ``ttl``
@@ -82,8 +85,8 @@ class _HetznerClient:
             raise _NotAuthorizedException()
         try:
             return create_record_response.json()
-        except (ValueError, UnicodeDecodeError) as e:
-            raise _MalformedResponseException(e)
+        except (ValueError, UnicodeDecodeError) as exception:
+            raise _MalformedResponseException(exception)
 
     def delete_record(self, record_id):
         """
@@ -126,8 +129,8 @@ class _HetznerClient:
             for record in records:
                 if record['name'] == record_name:
                     return record['id']
-        except (ValueError, UnicodeDecodeError, KeyError) as e:
-            raise _MalformedResponseException(e)
+        except (ValueError, UnicodeDecodeError, KeyError) as exception:
+            raise _MalformedResponseException(exception)
         raise _RecordNotFoundException(record_name)
 
     def _get_zone_id_by_domain(self, domain):
@@ -155,6 +158,6 @@ class _HetznerClient:
                 # take sld and tld to match zones
                 if zone_name_tokens[-1] == domain_tokens[-1] and zone_name_tokens[-2] == domain_tokens[-2]:
                     return zone['id']
-        except (KeyError, UnicodeDecodeError, ValueError) as e:
-            raise _MalformedResponseException(e)
+        except (KeyError, UnicodeDecodeError, ValueError) as exception:
+            raise _MalformedResponseException(exception)
         raise _ZoneNotFoundException(domain)
