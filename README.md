@@ -7,13 +7,11 @@ subsequently removing, TXT records using the Hetzner DNS API.
 
 ## Install
 
-There is no pypi distribution yet. You can install this plugin via pip directly from this repo though:
+Install this package via pip in the same python environment where you installed your certbot.
 
 ```
-pip install -e git+https://github.com/ctrlaltcoop/certbot-dns-hetzner.git
+pip install certbot-dns-hetzner
 ```
-
-A more sophisticated versioning and pypi distribution is to follow
 
 ## Usage
 
