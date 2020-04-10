@@ -1,4 +1,4 @@
-name: Example workflow for Codecov
+name: Lint, Test, Coverage
 on: [push]
 jobs:
   run:
@@ -17,7 +17,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -e .
     - name: Linting
-      - run: |
+      run: |
           pip install pylint
           python -m pylint --reports=n --rcfile=.pylintrc certbot_dns_hetzner
     - name: Testing with tox
