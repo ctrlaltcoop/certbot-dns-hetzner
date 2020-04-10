@@ -1,5 +1,8 @@
 name: Publish on pypi
-on: [push]
+on:
+  create:
+    tags:
+      - v*
 jobs:
   build:
 
@@ -8,7 +11,6 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Publish Python Package
-      if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
       uses: mariamrf/py-package-publish-action@v1.0.0
       with:
         python_version: '3.8.0'
