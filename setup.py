@@ -1,4 +1,4 @@
-import sys
+import os
 
 from setuptools import find_packages
 from setuptools import setup
@@ -12,12 +12,20 @@ install_requires = [
     'certbot>=1.1.0',
     'setuptools',
     'zope.interface',
+    'requests',
+    'mock',
+    'requests-mock',
 ]
+
+BASE_PATH = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(BASE_PATH, "README.md")) as f:
+    long_description = f.read()
 
 setup(
     name='certbot-dns-hetzner',
     version=version,
     description="Hetzner DNS Authenticator plugin for Certbot",
+    long_description=long_description,
     url='https://github.com/ctrlaltcoop/certbot-dns-hetzner',
     author="ctrl.alt.coop",
     author_email='kontakt@ctrl.alt.coop',
@@ -53,4 +61,5 @@ setup(
             'dns-hetzner = certbot_dns_hetzner.dns_hetzner:Authenticator',
         ],
     },
+    test_suite="certbot_dns_ispconfig",
 )

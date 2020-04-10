@@ -19,10 +19,11 @@ A more sophisticated versioning and pypi distribution is to follow
 
 To start using DNS authentication for the Hetzner DNS API, pass the following arguments on certbot's command line:
 
-| Option                                                      | Description                                      |
-|-------------------------------------------------------------|--------------------------------------------------|
-|``--authenticator certbot-dns-hetzner:dns-hetzner``          | select the authenticator plugin (Required)       |
-|``--certbot-dns-hetzner:dns-hetzner-credentials``            | Hetzner DNS API credentials INI file. (Required) |
+| Option                                                     | Description                                      |
+|------------------------------------------------------------|--------------------------------------------------|
+| `--authenticator certbot-dns-hetzner:dns-hetzner`          | select the authenticator plugin (Required)       |
+| `--certbot-dns-hetzner:dns-hetzner-credentials`            | Hetzner DNS API credentials INI file. (Required) |
+| `--certbot-dns-ispconfig:dns-ispconfig-propagation-seconds`| Seconds to wait for the TXT record to propagate  |
 
 ## Credentials
 
