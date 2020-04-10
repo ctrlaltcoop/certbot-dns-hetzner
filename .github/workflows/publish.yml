@@ -1,12 +1,17 @@
 name: Publish on pypi
 on: [push]
 jobs:
-  publish:
+  build:
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Publish package
-        if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
-        uses: pypa/gh-action-pypi-publish@master
-        with:
-          user: ${{ secrets.PYPI_USERNAME }}
-          password: ${{ secrets.PYPI_PASSWORD }}
+    - uses: actions/checkout@master
+    - name: Publish Python Package
+      if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
+      uses: mariamrf/py-package-publish-action@v1.0.0
+      with:
+        python_version: '3.8.0'
+      env:
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
