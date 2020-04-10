@@ -2,10 +2,9 @@ name: Example workflow for Codecov
 on: [push]
 jobs:
   run:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: ubuntu-latest
         python-version: [ '2.7', '3.5', '3.6', '3.7', '3.8' ]
     steps:
     - uses: actions/checkout@master
