@@ -19,11 +19,10 @@ A more sophisticated versioning and pypi distribution is to follow
 
 To start using DNS authentication for the Hetzner DNS API, pass the following arguments on certbot's command line:
 
-============================================================= ==============================================
-``--authenticator certbot-dns-hetzner:dns-hetzner``          select the authenticator plugin (Required)
-
-``--certbot-dns-hetzner:dns-hetzner-credentials``             Hetzner DNS API credentials INI file. (Required)
-============================================================= ==============================================
+| Option                                                      | Description                                      |
+|-------------------------------------------------------------|--------------------------------------------------|
+|``--authenticator certbot-dns-hetzner:dns-hetzner``          | select the authenticator plugin (Required)       |
+|``--certbot-dns-hetzner:dns-hetzner-credentials``            | Hetzner DNS API credentials INI file. (Required) |
 
 ## Credentials
 
@@ -32,23 +31,25 @@ From the hetzner DNS control panel at https://dns.hetzner.com go to "API Tokens"
 
 An example ``credentials.ini`` file:
 
-.. code-block:: ini
-    certbot_dns_hetzner:dns_hetzner_api_token = nohnah4zoo9Kiejee9aGh0thoopee2sa
-
+```ini
+certbot_dns_hetzner:dns_hetzner_api_token = nohnah4zoo9Kiejee9aGh0thoopee2sa
+```
 ## Examples
+To acquire a certificate for `example.com`
+```shell script
+certbot certonly \\
+ --authenticator certbot-dns-hetzner:dns-hetzner \\
+ --certbot-dns-hetzner:dns-hetzner-credentials /path/to/my/hetzner.ini \\
+ -d example.com
+```
 
-.. code-block:: bash
-   :caption: To acquire a certificate for ``example.com``
-   certbot certonly \\
-     --authenticator certbot-dns-hetzner:dns-hetzner \\
-     --certbot-dns-hetzner:dns-hetzner-credentials /path/to/my/hetzner.ini \\
-     -d example.com
-.. code-block:: bash
-   :caption: To acquire a certificate for ``*.example.com``
+To acquire a certificate for ``*.example.com``
+```shell script
    certbot certonly \\
      --authenticator certbot-dns-hetzner:dns-hetzner \\
      --certbot-dns-hetzner:dns-hetzner-credentials /path/to/my/hetzner.ini \\
      -d '*.example.com'
+```
      
 ## Thanks to
 
