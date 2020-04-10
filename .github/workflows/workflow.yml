@@ -16,7 +16,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -e .
-    - name: tox
+    - name: Linting
+      - run: |
+          pip install pylint
+          python -m pylint --reports=n --rcfile=.pylintrc certbot_dns_hetzner
+    - name: Testing with tox
       run: |
         pip install tox tox-gh-actions
         tox
