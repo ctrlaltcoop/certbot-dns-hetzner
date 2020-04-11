@@ -2,6 +2,7 @@
 [![codecov](https://codecov.io/gh/ctrlaltcoop/certbot-dns-hetzner/branch/master/graph/badge.svg)](https://codecov.io/gh/ctrlaltcoop/certbot-dns-hetzner)
 ![Tests, Coverage](https://github.com/ctrlaltcoop/certbot-dns-hetzner/workflows/Tests,%20Coverage/badge.svg?branch=master)
 [![PyPI version](https://badge.fury.io/py/certbot-dns-hetzner.svg)](https://badge.fury.io/py/certbot-dns-hetzner)
+![Supported Python](https://img.shields.io/pypi/pyversions/certbot-dns-hetzner)
 
 This certbot plugin automates the process of
 completing a dns-01 challenge by creating, and
@@ -23,7 +24,7 @@ To start using DNS authentication for the Hetzner DNS API, pass the following ar
 |------------------------------------------------------------|--------------------------------------------------|
 | `--authenticator certbot-dns-hetzner:dns-hetzner`          | select the authenticator plugin (Required)       |
 | `--certbot-dns-hetzner:dns-hetzner-credentials`            | Hetzner DNS API credentials INI file. (Required) |
-| `--certbot-dns-ispconfig:dns-ispconfig-propagation-seconds`| Seconds to wait for the TXT record to propagate  |
+| `--certbot-dns-hetzner:dns-hetzner-propagation-seconds`    | Seconds to wait for the TXT record to propagate  |
 
 ## Credentials
 
