@@ -74,8 +74,8 @@ class Authenticator(dns_common.DNSAuthenticator):
             self.credentials.conf('api_token'),
         )
 
-    def _fqdn_format(self, name):
+    @staticmethod
+    def _fqdn_format(name):
         if not name.endswith('.'):
             return '{0}.'.format(name)
-        else:
-            return name
+        return name
