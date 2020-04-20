@@ -23,7 +23,6 @@ class Authenticator(dns_common.DNSAuthenticator):
     """
 
     description = 'Obtain certificates using a DNS TXT record (if you are using Hetzner for DNS).'
-    record_id = None
 
     def __init__(self, *args, **kwargs):
         super(Authenticator, self).__init__(*args, **kwargs)
@@ -49,14 +48,13 @@ class Authenticator(dns_common.DNSAuthenticator):
 
     def _perform(self, domain, validation_name, validation):
         try:
-            record_response = self._get_hetzner_client().add_record(
+            self._get_hetzner_client().add_record(
                 domain,
                 "TXT",
-                '{0}.'.format(validation_name),
+                self._fqdn_format(validation_name),
                 validation,
                 TTL
             )
-            self.record_id = record_response['record']['id']
         except (
                 _ZoneNotFoundException,
                 requests.ConnectionError,
@@ -67,8 +65,7 @@ class Authenticator(dns_common.DNSAuthenticator):
 
     def _cleanup(self, domain, validation_name, validation):
         try:
-            if self.record_id:
-                self._get_hetzner_client().delete_record(record_id=self.record_id)
+            self._get_hetzner_client().delete_record_by_name(domain, self._fqdn_format(validation_name))
         except (requests.ConnectionError, _NotAuthorizedException) as exception:
             raise errors.PluginError(exception)
 
@@ -76,3 +73,9 @@ class Authenticator(dns_common.DNSAuthenticator):
         return _HetznerClient(
             self.credentials.conf('api_token'),
         )
+
+    def _fqdn_format(self, name):
+        if not name.endswith('.'):
+            return '{0}.'.format(name)
+        else:
+            return name
