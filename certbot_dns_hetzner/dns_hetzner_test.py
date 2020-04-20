@@ -70,6 +70,15 @@ class AuthenticatorTest(
 
         self.mock_client.delete_record_by_name.assert_called_with(DOMAIN, '_acme-challenge.' + DOMAIN + '.')
 
+    def test_cleanup_but_connection_aborts(self):
+        self.mock_client.add_record.return_value = FAKE_RECORD
+        # _attempt_cleanup | pylint: disable=protected-access
+        self.auth.perform([self.achall])
+        self.auth._attempt_cleanup = True
+        self.auth.cleanup([self.achall])
+
+        self.mock_client.delete_record_by_name.assert_called_with(DOMAIN, '_acme-challenge.' + DOMAIN + '.')
+
 
 if __name__ == '__main__':
     unittest.main()  # pragma: no cover
