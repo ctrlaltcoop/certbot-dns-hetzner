@@ -2,9 +2,9 @@ name: Publish on pypi
 on:
   create:
     tags:
-      - v*
+      - 'v*'
 jobs:
-  build:
+  publish:
 
     runs-on: ubuntu-latest
 
