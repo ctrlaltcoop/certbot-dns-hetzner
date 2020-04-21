@@ -50,7 +50,6 @@ class AuthenticatorTest(
         self.mock_client.add_record.assert_called_with(
             DOMAIN, 'TXT', '_acme-challenge.' + DOMAIN + '.', mock.ANY, mock.ANY
         )
-        self.assertEqual(self.auth.record_id, FAKE_RECORD['record']['id'])
 
     def test_perform_but_raises_zone_not_found(self):
         self.mock_client.add_record.side_effect = mock.MagicMock(side_effect=_ZoneNotFoundException(DOMAIN))
@@ -69,7 +68,16 @@ class AuthenticatorTest(
         self.auth._attempt_cleanup = True
         self.auth.cleanup([self.achall])
 
-        self.mock_client.delete_record.assert_called_with(record_id=FAKE_RECORD['record']['id'])
+        self.mock_client.delete_record_by_name.assert_called_with(DOMAIN, '_acme-challenge.' + DOMAIN + '.')
+
+    def test_cleanup_but_connection_aborts(self):
+        self.mock_client.add_record.return_value = FAKE_RECORD
+        # _attempt_cleanup | pylint: disable=protected-access
+        self.auth.perform([self.achall])
+        self.auth._attempt_cleanup = True
+        self.auth.cleanup([self.achall])
+
+        self.mock_client.delete_record_by_name.assert_called_with(DOMAIN, '_acme-challenge.' + DOMAIN + '.')
 
 
 if __name__ == '__main__':

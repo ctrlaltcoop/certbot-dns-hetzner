@@ -88,6 +88,22 @@ class _HetznerClient:
         except (ValueError, UnicodeDecodeError) as exception:
             raise _MalformedResponseException(exception)
 
+    def delete_record_by_name(self, domain, record_name):
+        """
+        Searches for a zone matching ``domain``, if found find and delete a record matching ``record_name`
+        Deletes record with ``record_id`` from your Hetzner Account
+        :param domain: Domain of zone in which the record should be found
+        :param record_name: ID of record to be deleted
+        :raises requests.exceptions.ConnectionError: If the API request fails
+        :raises ._MalformedResponseException: If the API response is not 200
+        :raises ._ZoneNotFoundException: If no zone is found matching ``domain``
+        :raises ._RecordNotFoundException: If no record is found matching ``record_name``
+        :raises ._NotAuthorizedException: If Hetzner does not accept the authorization credentials
+        """
+        zone_id = self._get_zone_id_by_domain(domain)
+        record_id = self._get_record_id_by_name(zone_id, record_name)
+        self.delete_record(record_id)
+
     def delete_record(self, record_id):
         """
         Deletes record with ``record_id`` from your Hetzner Account
