@@ -2,7 +2,7 @@ name: Publish on pypi
 on:
   push:
     branches:
-      - refs/tags/@orgname/*
+      - refs/tags/@ctrlaltcoop/*
 jobs:
   publish:
 
