@@ -34,6 +34,11 @@ class _NotAuthorizedException(_HetznerException):
     def __init__(self, *args):
         super(_NotAuthorizedException, self).__init__('Malformed authorization or invalid API token', *args)
 
+class _UnprocessableEntityException(_HetznerException):
+    def __init__(self, record_data, *args):
+        super(_UnprocessableEntityException, self).__init__('Unprocessable entity in record {0}'.format(record_data), *args)
+        self.record_data = record_data
+
 
 class _HetznerClient:
     """
@@ -67,22 +72,26 @@ class _HetznerClient:
         :raises ._MalformedResponseException: If the response is missing expected values or is invalid JSON
         :raises ._ZoneNotFoundException: If no zone with the SLD and TLD of ``domain`` is found in your Hetzner account
         :raises ._NotAuthorizedException: If Hetzner does not accept the authorization credentials
+        :raises ._UnprocessableEntityException: If the request is valid but still cannot be processed. e.g. if it's committed to the wrong zone
         :raises requests.exceptions.ConnectionError: If the API request fails
         """
         zone_id = self._get_zone_id_by_domain(domain)
+        record_data=json.dumps({
+            "value": value,
+            "ttl": ttl,
+            "type": record_type,
+            "name": name,
+            "zone_id": zone_id
+        })
         create_record_response = requests.post(
             url="{0}/records".format(HETZNER_API_ENDPOINT),
             headers=self._headers,
-            data=json.dumps({
-                "value": value,
-                "ttl": ttl,
-                "type": record_type,
-                "name": name,
-                "zone_id": zone_id
-            })
+            data=record_data
         )
         if create_record_response.status_code == 401:
             raise _NotAuthorizedException()
+        if create_record_response.status_code == 422:
+            raise _UnprocessableEntityException(record_data)
         try:
             return create_record_response.json()
         except (ValueError, UnicodeDecodeError) as exception:
