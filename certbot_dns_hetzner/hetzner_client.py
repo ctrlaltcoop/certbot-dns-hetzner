@@ -4,6 +4,8 @@ A Hetzner helper class to wrap the API relevant for the functionality in this pl
 import json
 import requests
 
+from certbot.plugins import dns_common
+
 HETZNER_API_ENDPOINT = 'https://dns.hetzner.com/api/v1'
 
 
@@ -169,7 +171,7 @@ class _HetznerClient:
         :raises requests.exceptions.ConnectionError: If the API request fails
         :rtype: str
         """
-        domain_tokens = domain.split('.')
+        domain_name_guesses = dns_common.base_domain_name_guesses(domain)
         zones_response = requests.get(
             url="{0}/zones".format(HETZNER_API_ENDPOINT),
             headers=self._headers,
@@ -178,11 +180,11 @@ class _HetznerClient:
             raise _NotAuthorizedException()
         try:
             zones = zones_response.json()['zones']
-            for zone in zones:
-                zone_name_tokens = zone['name'].split('.')
-                # take sld and tld to match zones
-                if zone_name_tokens[-1] == domain_tokens[-1] and zone_name_tokens[-2] == domain_tokens[-2]:
-                    return zone['id']
+            # Find the most specific domain listed in the available zones
+            for guess in domain_name_guesses:
+                for zone in zones:
+                    if zone['name'] == guess:
+                        return zone['id']
         except (KeyError, UnicodeDecodeError, ValueError) as exception:
             raise _MalformedResponseException(exception)
         raise _ZoneNotFoundException(domain)
