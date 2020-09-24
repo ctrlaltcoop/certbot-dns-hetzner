@@ -15,31 +15,32 @@ class _HetznerException(Exception):
 
 class _ZoneNotFoundException(_HetznerException):
     def __init__(self, domain_name, *args):
-        super().__init__('Zone {0} not found in Hetzner account'.format(domain_name), *args)
+        super(_ZoneNotFoundException, self).__init__('Zone {0} not found in Hetzner account'.format(domain_name), *args)
         self.domain_name = domain_name
 
 
 class _MalformedResponseException(_HetznerException):
     def __init__(self, cause, *args):
-        super().__init__(
+        super(_MalformedResponseException, self).__init__(
             'Received an unexpected response from Hetzner API:\n{0}'.format(cause), *args)
         self.cause = cause
 
 
 class _RecordNotFoundException(_HetznerException):
     def __init__(self, record_name, *args):
-        super().__init__('Record with name {0} not found'.format(record_name), *args)
+        super(_RecordNotFoundException, self).__init__('Record with name {0} not found'.format(record_name), *args)
         self.record_name = record_name
 
 
 class _NotAuthorizedException(_HetznerException):
     def __init__(self, *args):
-        super().__init__('Malformed authorization or invalid API token', *args)
+        super(_NotAuthorizedException, self).__init__('Malformed authorization or invalid API token', *args)
 
 
 class _UnprocessableEntityException(_HetznerException):
     def __init__(self, record_data, *args):
-        super().__init__('Unprocessable entity in record {0}'.format(record_data), *args)
+        super(_UnprocessableEntityException, self).__init__('Unprocessable entity in record {0}'.format(record_data),
+                                                            *args)
         self.record_data = record_data
 
 
