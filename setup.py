@@ -15,6 +15,7 @@ install_requires = [
     'requests',
     'mock',
     'requests-mock',
+    'parsedatetime<=2.5'
 ]
 
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))
