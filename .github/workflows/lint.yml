@@ -15,5 +15,5 @@ jobs:
         pip install -e .
     - name: Linting
       run: |
-          pip install pylint
+          pip install pylint==2.4.4
           python -m pylint --reports=n --rcfile=.pylintrc certbot_dns_hetzner
