@@ -22,9 +22,9 @@ To start using DNS authentication for the Hetzner DNS API, pass the following ar
 
 | Option                                                     | Description                                      |
 |------------------------------------------------------------|--------------------------------------------------|
-| `--authenticator certbot-dns-hetzner:dns-hetzner`          | select the authenticator plugin (Required)       |
-| `--certbot-dns-hetzner:dns-hetzner-credentials`            | Hetzner DNS API credentials INI file. (Required) |
-| `--certbot-dns-hetzner:dns-hetzner-propagation-seconds`    | Seconds to wait for the TXT record to propagate  |
+| `--authenticator dns-hetzner`                              | select the authenticator plugin (Required)       |
+| `--dns-hetzner-credentials`                                | Hetzner DNS API credentials INI file. (Required) |
+| `--dns-hetzner-propagation-seconds`                        | Seconds to wait for the TXT record to propagate  |
 
 ## Credentials
 
@@ -34,22 +34,22 @@ From the hetzner DNS control panel at https://dns.hetzner.com go to "API Tokens"
 An example ``credentials.ini`` file:
 
 ```ini
-certbot_dns_hetzner:dns_hetzner_api_token = nohnah4zoo9Kiejee9aGh0thoopee2sa
+dns_hetzner_api_token = nohnah4zoo9Kiejee9aGh0thoopee2sa
 ```
 ## Examples
 To acquire a certificate for `example.com`
 ```shell script
 certbot certonly \\
- --authenticator certbot-dns-hetzner:dns-hetzner \\
- --certbot-dns-hetzner:dns-hetzner-credentials /path/to/my/hetzner.ini \\
+ --authenticator dns-hetzner \\
+ --dns-hetzner-credentials /path/to/my/hetzner.ini \\
  -d example.com
 ```
 
 To acquire a certificate for ``*.example.com``
 ```shell script
    certbot certonly \\
-     --authenticator certbot-dns-hetzner:dns-hetzner \\
-     --certbot-dns-hetzner:dns-hetzner-credentials /path/to/my/hetzner.ini \\
+     --authenticator dns-hetzner \\
+     --dns-hetzner-credentials /path/to/my/hetzner.ini \\
      -d '*.example.com'
 ```
      
