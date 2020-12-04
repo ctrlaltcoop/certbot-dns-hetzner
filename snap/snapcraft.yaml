@@ -3,7 +3,7 @@ name: certbot-dns-hetzner
 summary: Hetzner DNS Authenticator plugin for Certbot
 description: Hetzner DNS Authenticator plugin for Certbot
 confinement: strict
-grade: devel
+grade: stable
 base: core20
 adopt-info: certbot-dns-hetzner
 
