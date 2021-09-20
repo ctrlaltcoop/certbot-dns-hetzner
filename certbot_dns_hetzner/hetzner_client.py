@@ -177,6 +177,9 @@ class _HetznerClient:
         domain_name_guesses = dns_common.base_domain_name_guesses(domain)
         zones_response = requests.get(
             url="{0}/zones".format(HETZNER_API_ENDPOINT),
+            params={
+                'name': domain
+            },
             headers=self._headers,
         )
         if zones_response.status_code == 401:
