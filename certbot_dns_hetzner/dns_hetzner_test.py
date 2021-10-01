@@ -10,6 +10,13 @@ from certbot.plugins import dns_test_common
 from certbot.plugins.dns_test_common import DOMAIN
 from certbot.tests import util as test_util
 
+try:
+    # certbot 1.18+
+    patch_display_util = test_util.patch_display_util
+except AttributeError:
+    # certbot <= 1.17
+    patch_display_util = test_util.patch_get_utility
+
 from certbot_dns_hetzner.fakes import FAKE_API_TOKEN, FAKE_RECORD
 from certbot_dns_hetzner.hetzner_client import _ZoneNotFoundException
 
@@ -44,7 +51,8 @@ class AuthenticatorTest(
         # _get_ispconfig_client | pylint: disable=protected-access
         self.auth._get_hetzner_client = mock.MagicMock(return_value=self.mock_client)
 
-    def test_perform(self):
+    @patch_display_util()
+    def test_perform(self, unused_mock_get_utility):
         self.mock_client.add_record.return_value = FAKE_RECORD
         self.auth.perform([self.achall])
         self.mock_client.add_record.assert_called_with(
@@ -61,7 +69,8 @@ class AuthenticatorTest(
             DOMAIN, 'TXT', '_acme-challenge.' + DOMAIN + '.', mock.ANY, mock.ANY
         )
 
-    def test_cleanup(self):
+    @patch_display_util()
+    def test_cleanup(self, unused_mock_get_utility):
         self.mock_client.add_record.return_value = FAKE_RECORD
         # _attempt_cleanup | pylint: disable=protected-access
         self.auth.perform([self.achall])
@@ -70,7 +79,8 @@ class AuthenticatorTest(
 
         self.mock_client.delete_record_by_name.assert_called_with(DOMAIN, '_acme-challenge.' + DOMAIN + '.')
 
-    def test_cleanup_but_connection_aborts(self):
+    @patch_display_util()
+    def test_cleanup_but_connection_aborts(self, unused_mock_get_utility):
         self.mock_client.add_record.return_value = FAKE_RECORD
         # _attempt_cleanup | pylint: disable=protected-access
         self.auth.perform([self.achall])
