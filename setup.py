@@ -62,5 +62,5 @@ setup(
             'dns-hetzner = certbot_dns_hetzner.dns_hetzner:Authenticator',
         ],
     },
-    test_suite="certbot_dns_ispconfig",
+    test_suite="certbot_dns_hetzner",
 )
