@@ -13,7 +13,6 @@ install_requires = [
     'setuptools',
     'zope.interface',
     'requests',
-    'mock',
     'requests-mock',
     'parsedatetime<=2.5;python_version<"3.0"'
 ]
