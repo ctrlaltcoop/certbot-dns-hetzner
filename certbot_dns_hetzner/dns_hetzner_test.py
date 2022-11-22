@@ -2,7 +2,7 @@
 
 import unittest
 
-import mock
+from unittest import mock
 
 from certbot.compat import os
 from certbot.errors import PluginError
