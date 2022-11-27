@@ -1,10 +1,8 @@
 """DNS Authenticator for Hetzner DNS."""
 import requests
 
-import zope.interface
 
 from certbot import errors
-from certbot import interfaces
 from certbot.plugins import dns_common
 
 from certbot_dns_hetzner.hetzner_client import \
@@ -15,8 +13,6 @@ from certbot_dns_hetzner.hetzner_client import \
 TTL = 60
 
 
-@zope.interface.implementer(interfaces.IAuthenticator)
-@zope.interface.provider(interfaces.IPluginFactory)
 class Authenticator(dns_common.DNSAuthenticator):
     """DNS Authenticator for Hetzner
     This Authenticator uses the Hetzner DNS API to fulfill a dns-01 challenge.
