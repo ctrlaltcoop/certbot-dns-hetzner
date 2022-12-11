@@ -3,7 +3,7 @@ import os
 from setuptools import find_packages
 from setuptools import setup
 
-version = '1.0.5'
+version = '2.0.0'
 
 # This package relies on PyOpenSSL, requests, and six, however, it isn't
 # specified here to avoid masking the more specific request requirements in
@@ -13,6 +13,7 @@ install_requires = [
     'setuptools',
     'requests',
     'requests-mock',
+    'dns-lexicon>=3.11.6',
     'parsedatetime<=2.5;python_version<"3.0"'
 ]
 
@@ -30,7 +31,7 @@ setup(
     author="ctrl.alt.coop",
     author_email='kontakt@ctrl.alt.coop',
     license='Apache License 2.0',
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*',
+    python_requires='>=3.7',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Plugins',
@@ -38,12 +39,12 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Security',
         'Topic :: System :: Installation/Setup',

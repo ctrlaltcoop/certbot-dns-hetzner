@@ -8,6 +8,12 @@ This certbot plugin automates the process of
 completing a dns-01 challenge by creating, and
 subsequently removing, TXT records using the Hetzner DNS API.
 
+## Requirements
+
+### For certbot < 2
+
+Notice that this plugin is only supporting certbot>=2.0 from 2.0 onwards. For older certbot versions use 1.x releases.
+
 ## Install
 
 Install this package via pip in the same python environment where you installed your certbot.

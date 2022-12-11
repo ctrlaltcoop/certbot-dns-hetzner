@@ -12,6 +12,7 @@ dist*/
 letsencrypt.log
 certbot.log
 letsencrypt-auto-source/letsencrypt-auto.sig.lzma.base64
+coverage.xml
 
 # coverage
 .coverage
