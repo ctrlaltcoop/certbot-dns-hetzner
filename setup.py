@@ -9,9 +9,8 @@ version = '1.0.5'
 # specified here to avoid masking the more specific request requirements in
 # acme. See https://github.com/pypa/pip/issues/988 for more info.
 install_requires = [
-    'certbot>=1.1.0',
+    'certbot>=2.0.0',
     'setuptools',
-    'zope.interface',
     'requests',
     'requests-mock',
     'parsedatetime<=2.5;python_version<"3.0"'
