@@ -8,12 +8,12 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@master
       with:
-        python-version: '3.8'
+        python-version: '3.11'
     - name: Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -e .
     - name: Linting
       run: |
-          pip install pylint==2.4.4
+          pip install pylint==2.15.8
           python -m pylint --reports=n --rcfile=.pylintrc certbot_dns_hetzner

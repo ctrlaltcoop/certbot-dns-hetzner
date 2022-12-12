@@ -2,17 +2,17 @@
 Fakes needed for tests
 """
 
-FAKE_API_TOKEN = 'XXXXXXXXXXXXXXXXXXXxxx'
+FAKE_API_TOKEN = "XXXXXXXXXXXXXXXXXXXxxx"
 FAKE_RECORD = {
     "record": {
-        'id': "123Fake",
+        "id": "123Fake",
     }
 }
 
-FAKE_DOMAIN = 'some.domain'
-FAKE_ZONE_ID = 'xyz'
-FAKE_RECORD_ID = 'zzz'
-FAKE_RECORD_NAME = 'thisisarecordname'
+FAKE_DOMAIN = "some.domain"
+FAKE_ZONE_ID = "xyz"
+FAKE_RECORD_ID = "zzz"
+FAKE_RECORD_NAME = "thisisarecordname"
 
 FAKE_RECORD_RESPONSE = {
     "record": {
@@ -33,7 +33,7 @@ FAKE_RECORDS_RESPONSE_WITH_RECORD = {
 FAKE_RECORDS_RESPONSE_WITHOUT_RECORD = {
     "records": [
         {
-            "id": 'nottheoneuwant',
+            "id": "nottheoneuwant",
             "name": "string",
         }
     ]
