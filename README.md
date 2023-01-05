@@ -1,6 +1,6 @@
 # Hetzner DNS Authenticator certbot plugin
-[![codecov](https://codecov.io/gh/ctrlaltcoop/certbot-dns-hetzner/branch/master/graph/badge.svg)](https://codecov.io/gh/ctrlaltcoop/certbot-dns-hetzner)
-![Tests, Coverage](https://github.com/ctrlaltcoop/certbot-dns-hetzner/workflows/Tests,%20Coverage/badge.svg?branch=master)
+[![codecov](https://codecov.io/gh/ctrlaltcoop/certbot-dns-hetzner/branch/main/graph/badge.svg?token=3XJVTPZ0AM)](https://codecov.io/gh/ctrlaltcoop/certbot-dns-hetzner)
+![Tests, Coverage](https://github.com/ctrlaltcoop/certbot-dns-hetzner/workflows/Tests,%20Coverage/badge.svg?branch=main)
 [![PyPI version](https://badge.fury.io/py/certbot-dns-hetzner.svg)](https://badge.fury.io/py/certbot-dns-hetzner)
 ![Supported Python](https://img.shields.io/pypi/pyversions/certbot-dns-hetzner)
 
