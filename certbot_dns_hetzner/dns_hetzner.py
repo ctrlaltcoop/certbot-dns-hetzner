@@ -1,7 +1,8 @@
 """DNS Authenticator for Hetzner DNS."""
 import tldextract
-from certbot.plugins import dns_common, dns_common_lexicon
-from lexicon.providers import hetzner
+from certbot.plugins import dns_common
+from lexicon.client import Client
+from lexicon.config import ConfigResolver
 
 TTL = 60
 
@@ -47,40 +48,27 @@ class Authenticator(dns_common.DNSAuthenticator):
         return '.'.join([zone_name.domain, zone_name.suffix])
 
     def _perform(self, domain, validation_name, validation):
-        self._get_hetzner_client().add_txt_record(
-            self._get_zone(domain),
-            self._fqdn_format(validation_name),
-            validation
-        )
+        with self._get_hetzner_client(domain) as client:
+            client.create_record("TXT", validation_name, validation)
 
     def _cleanup(self, domain, validation_name, validation):
-        self._get_hetzner_client().del_txt_record(
-            self._get_zone(domain),
-            self._fqdn_format(validation_name),
-            validation
-        )
+        with self._get_hetzner_client(domain) as client:
+            client.delete_record(None, "TXT", validation_name, validation)
 
-    def _get_hetzner_client(self):
-        return _HetznerClient(self.credentials.conf("api_token"))
+    def _get_hetzner_client(self, domain):
+        config = ConfigResolver().with_env().with_dict({
+            "provider_name": "hetzner",
+            "hetzner": {
+                "auth_token": self.credentials.conf("api_token")
+            },
+
+            "ttl": TTL,
+            "domain": self._get_zone(domain),
+        })
+        return Client(config)
 
     @staticmethod
     def _fqdn_format(name):
         if not name.endswith("."):
             return f"{name}."
         return name
-
-
-class _HetznerClient(dns_common_lexicon.LexiconClient):
-    """
-    Encapsulates all communication with the Hetzner via Lexicon.
-    """
-    def __init__(self, auth_token):
-        super().__init__()
-
-        config = dns_common_lexicon.build_lexicon_config('hetzner', {
-            'ttl': TTL,
-        }, {
-            'auth_token': auth_token,
-        })
-
-        self.provider = hetzner.Provider(config)
