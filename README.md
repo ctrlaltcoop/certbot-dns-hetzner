@@ -32,11 +32,12 @@ To start using DNS authentication for the Hetzner DNS API, pass the following ar
 | `--dns-hetzner-credentials`                                | Hetzner DNS API credentials INI file. (Required) |
 | `--dns-hetzner-propagation-seconds`                        | Seconds to wait for the TXT record to propagate  |
 
+
 If `certbot plugins` does not show the installed plugin, you might need to set `CERTBOT_PLUGIN_PATH`.  
 ```
 CERTBOT_PLUGIN_PATH=/usr/local/lib/python3.9/site-packages/ certbot renew
 ```  
-[Some background infos](https://community.letsencrypt.org/t/how-do-i-make-certbot-find-use-an-installed-plugin/198647/5)
+[See letsencrypt community thread](https://community.letsencrypt.org/t/how-do-i-make-certbot-find-use-an-installed-plugin/198647/5)
 
 ## Credentials
 
