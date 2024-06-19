@@ -48,7 +48,7 @@ class AuthenticatorTest(
             return_value=self.mock_client)
 
     @patch_display_util()
-    def test_perform(self, unused_mock_get_utility):
+    def test_perform(self, _unused_mock_get_utility):
         self.mock_client.create_record.return_value = FAKE_RECORD
         self.auth.perform([self.achall])
         self.mock_client.create_record.assert_called_with(
@@ -65,7 +65,7 @@ class AuthenticatorTest(
         )
 
     @patch_display_util()
-    def test_cleanup(self, unused_mock_get_utility):
+    def test_cleanup(self, _unused_mock_get_utility):
         self.mock_client.create_record.return_value = FAKE_RECORD
         # _attempt_cleanup | pylint: disable=protected-access
         self.auth.perform([self.achall])
@@ -77,7 +77,7 @@ class AuthenticatorTest(
         )
 
     @patch_display_util()
-    def test_cleanup_but_raises_plugin_error(self, unused_mock_get_utility):
+    def test_cleanup_but_raises_plugin_error(self, _unused_mock_get_utility):
         self.mock_client.create_record.return_value = FAKE_RECORD
         self.mock_client.delete_record.side_effect = mock.MagicMock(
             side_effect=PluginError()
