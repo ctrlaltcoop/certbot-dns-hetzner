@@ -32,13 +32,6 @@ To start using DNS authentication for the Hetzner DNS API, pass the following ar
 | `--dns-hetzner-credentials`                                | Hetzner DNS API credentials INI file. (Required) |
 | `--dns-hetzner-propagation-seconds`                        | Seconds to wait for the TXT record to propagate  |
 
-
-If `certbot plugins` does not show the installed plugin, you might need to set `CERTBOT_PLUGIN_PATH`.  
-```
-CERTBOT_PLUGIN_PATH=/usr/local/lib/python3.9/site-packages/ certbot renew
-```  
-[See letsencrypt community thread](https://community.letsencrypt.org/t/how-do-i-make-certbot-find-use-an-installed-plugin/198647/5)
-
 ## Credentials
 
 
@@ -66,6 +59,14 @@ To acquire a certificate for ``*.example.com``
      -d '*.example.com'
 ```
      
+## Troubleshooting
+
+If `certbot plugins` does not show the installed plugin, you might need to set `CERTBOT_PLUGIN_PATH`.  
+```
+CERTBOT_PLUGIN_PATH=/usr/local/lib/python3.9/site-packages/ certbot renew
+```  
+[See letsencrypt community thread](https://community.letsencrypt.org/t/how-do-i-make-certbot-find-use-an-installed-plugin/198647/5)
+
 ## Thanks to
 
 Of course certbot, which examples and documentation I used to implement this plugin. And to https://github.com/m42e/certbot-dns-ispconfig which served as an excellent example and README template as well.
