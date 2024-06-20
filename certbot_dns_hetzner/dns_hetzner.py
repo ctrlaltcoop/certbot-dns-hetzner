@@ -21,9 +21,9 @@ class Authenticator(dns_common.DNSAuthenticator):
         self.credentials = None
 
     @classmethod
-    def add_parser_arguments(cls, add):  # pylint: disable=arguments-differ
+    def add_parser_arguments(cls, add, default_propagation_seconds = 60):
         super(Authenticator, cls).add_parser_arguments(
-            add, default_propagation_seconds=60
+            add, default_propagation_seconds=default_propagation_seconds
         )
         add("credentials", help="Hetzner credentials INI file.")
 
