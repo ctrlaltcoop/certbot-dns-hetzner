@@ -13,7 +13,6 @@ from certbot.tests import util as test_util
 from certbot_dns_hetzner.fakes import FAKE_API_TOKEN, FAKE_RECORD
 
 
-
 patch_display_util = test_util.patch_display_util
 
 
@@ -44,43 +43,50 @@ class AuthenticatorTest(
         self.auth = Authenticator(self.config, "hetzner")
 
         self.mock_client = mock.MagicMock()
+
+        mock_client_wrapper = mock.MagicMock()
+        mock_client_wrapper.__enter__ = mock.MagicMock(
+            return_value=self.mock_client
+        )
+
         # _get_ispconfig_client | pylint: disable=protected-access
         self.auth._get_hetzner_client = mock.MagicMock(
-            return_value=self.mock_client)
+            return_value=mock_client_wrapper
+        )
 
     @patch_display_util()
-    def test_perform(self, unused_mock_get_utility):
-        self.mock_client.add_txt_record.return_value = FAKE_RECORD
+    def test_perform(self, _unused_mock_get_utility):
+        self.mock_client.create_record.return_value = FAKE_RECORD
         self.auth.perform([self.achall])
-        self.mock_client.add_txt_record.assert_called_with(
-            DOMAIN, "_acme-challenge." + DOMAIN + ".", mock.ANY
+        self.mock_client.create_record.assert_called_with(
+            "TXT", "_acme-challenge." + DOMAIN + ".", mock.ANY
         )
 
     def test_perform_but_raises_plugin_error(self):
-        self.mock_client.add_txt_record.side_effect = mock.MagicMock(
+        self.mock_client.create_record.side_effect = mock.MagicMock(
             side_effect=PluginError()
         )
         self.assertRaises(PluginError, self.auth.perform, [self.achall])
-        self.mock_client.add_txt_record.assert_called_with(
-            DOMAIN, "_acme-challenge." + DOMAIN + ".", mock.ANY
+        self.mock_client.create_record.assert_called_with(
+            "TXT", "_acme-challenge." + DOMAIN + ".", mock.ANY
         )
 
     @patch_display_util()
-    def test_cleanup(self, unused_mock_get_utility):
-        self.mock_client.add_txt_record.return_value = FAKE_RECORD
+    def test_cleanup(self, _unused_mock_get_utility):
+        self.mock_client.create_record.return_value = FAKE_RECORD
         # _attempt_cleanup | pylint: disable=protected-access
         self.auth.perform([self.achall])
         self.auth._attempt_cleanup = True
         self.auth.cleanup([self.achall])
 
-        self.mock_client.del_txt_record.assert_called_with(
-            DOMAIN, "_acme-challenge." + DOMAIN + ".", mock.ANY
+        self.mock_client.delete_record.assert_called_with(
+            None, "TXT", "_acme-challenge." + DOMAIN + ".", mock.ANY
         )
 
     @patch_display_util()
-    def test_cleanup_but_raises_plugin_error(self, unused_mock_get_utility):
-        self.mock_client.add_txt_record.return_value = FAKE_RECORD
-        self.mock_client.del_txt_record.side_effect = mock.MagicMock(
+    def test_cleanup_but_raises_plugin_error(self, _unused_mock_get_utility):
+        self.mock_client.create_record.return_value = FAKE_RECORD
+        self.mock_client.delete_record.side_effect = mock.MagicMock(
             side_effect=PluginError()
         )
         # _attempt_cleanup | pylint: disable=protected-access
@@ -88,8 +94,8 @@ class AuthenticatorTest(
         self.auth._attempt_cleanup = True
 
         self.assertRaises(PluginError, self.auth.cleanup, [self.achall])
-        self.mock_client.del_txt_record.assert_called_with(
-            DOMAIN, "_acme-challenge." + DOMAIN + ".", mock.ANY
+        self.mock_client.delete_record.assert_called_with(
+            None, "TXT", "_acme-challenge." + DOMAIN + ".", mock.ANY
         )
 
 
