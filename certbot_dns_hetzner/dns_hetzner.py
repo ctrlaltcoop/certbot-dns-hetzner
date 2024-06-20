@@ -48,10 +48,12 @@ class Authenticator(dns_common.DNSAuthenticator):
         return '.'.join([zone_name.domain, zone_name.suffix])
 
     def _perform(self, domain, validation_name, validation):
-        self._get_hetzner_client(domain).create_record("TXT", self._fqdn_format(validation_name), validation)
+        with self._get_hetzner_client(domain) as client:
+            client.create_record("TXT", self._fqdn_format(validation_name), validation)
 
     def _cleanup(self, domain, validation_name, validation):
-        self._get_hetzner_client(domain).delete_record(None, "TXT", self._fqdn_format(validation_name), validation)
+        with self._get_hetzner_client(domain) as client:
+            client.delete_record(None, "TXT", self._fqdn_format(validation_name), validation)
 
     def _get_hetzner_client(self, domain):
         config = ConfigResolver().with_env().with_dict({
