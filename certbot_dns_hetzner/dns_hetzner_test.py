@@ -43,9 +43,16 @@ class AuthenticatorTest(
         self.auth = Authenticator(self.config, "hetzner")
 
         self.mock_client = mock.MagicMock()
+
+        mock_client_wrapper = mock.MagicMock()
+        mock_client_wrapper.__enter__ = mock.MagicMock(
+            return_value=self.mock_client
+        )
+
         # _get_ispconfig_client | pylint: disable=protected-access
         self.auth._get_hetzner_client = mock.MagicMock(
-            return_value=self.mock_client)
+            return_value=mock_client_wrapper
+        )
 
     @patch_display_util()
     def test_perform(self, _unused_mock_get_utility):
