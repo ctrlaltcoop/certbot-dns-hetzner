@@ -35,7 +35,8 @@ To start using DNS authentication for the Hetzner DNS API, pass the following ar
 ## Credentials
 
 
-From the hetzner DNS control panel at https://dns.hetzner.com go to "API Tokens" and add a personal access token.
+From the hetzner DNS control panel at https://dns.hetzner.com go to "API Tokens" and add a personal access token.  
+Please make sure to use the absolute path - some users experienced problems with relative paths.  
 
 An example ``credentials.ini`` file:
 
@@ -61,11 +62,15 @@ To acquire a certificate for ``*.example.com``
      
 ## Troubleshooting
 
+### Plugin not showing up
 If `certbot plugins` does not show the installed plugin, you might need to set `CERTBOT_PLUGIN_PATH`.  
 ```
 CERTBOT_PLUGIN_PATH=/usr/local/lib/python3.9/site-packages/ certbot renew
 ```  
 [See letsencrypt community thread](https://community.letsencrypt.org/t/how-do-i-make-certbot-find-use-an-installed-plugin/198647/5)
+
+### Renewing certificate fails
+Please ensure to use an absolute path for the credentials file - some users experienced problems with relative paths.
 
 ## Thanks to
 
