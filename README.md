@@ -72,6 +72,10 @@ CERTBOT_PLUGIN_PATH=/usr/local/lib/python3.9/site-packages/ certbot renew
 ### Renewing certificate fails
 Please ensure to use an absolute path for the credentials file - some users experienced problems with relative paths.
 
+### Snap is not working
+We did not nor plan to support snap - it was created from this [repo](https://github.com/BigMichi1/certbot-dns-hetzner).  
+Feel free to start a new snap yourself - we would happily link it here.
+
 ## Thanks to
 
 Of course certbot, which examples and documentation I used to implement this plugin. And to https://github.com/m42e/certbot-dns-ispconfig which served as an excellent example and README template as well.
