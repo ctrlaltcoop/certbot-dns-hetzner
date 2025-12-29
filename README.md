@@ -4,9 +4,12 @@
 [![PyPI version](https://badge.fury.io/py/certbot-dns-hetzner.svg)](https://badge.fury.io/py/certbot-dns-hetzner)
 ![Supported Python](https://img.shields.io/pypi/pyversions/certbot-dns-hetzner)
 
-This certbot plugin automates the process of
-completing a dns-01 challenge by creating, and
-subsequently removing, TXT records using the Hetzner DNS API.
+This certbot plugin automates the process of completing a dns-01 challenge by creating, and subsequently removing, TXT records using the [Hetzner DNS API](https://dns.hetzner.com/api-docs).
+
+⚠️ Deprecation Warning ⚠️
+The [Hetzner DNS API](https://dns.hetzner.com/api-docs) is deprecated and will be substituded by the [Hetzner Cloud API](https://docs.hetzner.cloud/reference/cloud#dns).
+As there is a viable certbot plugin implementation already available ([certbot-dns-hetzner-cloud](https://github.com/rolschewsky/certbot-dns-hetzner-cloud)), this plugin will not be updated and
+therefore should be considered deprecated as well.
 
 ## Requirements
 
