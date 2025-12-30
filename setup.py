@@ -3,7 +3,7 @@ import os
 from setuptools import find_packages
 from setuptools import setup
 
-version = '2.0.1'
+version = '2.0.3'
 
 # This package relies on PyOpenSSL, requests, and six, however, it isn't
 # specified here to avoid masking the more specific request requirements in
@@ -13,7 +13,7 @@ install_requires = [
     'setuptools',
     'requests',
     'requests-mock',
-    'dns-lexicon-fupduck @ git+https://github.com/fupduck/dns-lexicon@merge_instead_of_rebase',
+    'dns-lexicon @ git+https://github.com/fupduck/dns-lexicon@merge_intead_of_rebase',
     'parsedatetime<=2.5;python_version<"3.0"'
 ]
 
