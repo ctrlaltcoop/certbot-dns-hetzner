@@ -30,7 +30,7 @@ setup(
     url='https://github.com/ctrlaltcoop/certbot-dns-hetzner',
     author="ctrl.alt.coop",
     author_email='kontakt@ctrl.alt.coop',
-    license='Apache License 2.0',
+    license='Apache-2.0',
     python_requires='>=3.8',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
