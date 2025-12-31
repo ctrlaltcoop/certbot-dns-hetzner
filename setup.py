@@ -13,7 +13,7 @@ install_requires = [
     'setuptools',
     'requests',
     'requests-mock',
-    'dns-lexicon@./dns-lexicon',
+    f'dns-lexicon@file://localhost/{os.getcwd()}/dns-lexicon/',
     'parsedatetime<=2.5;python_version<"3.0"'
 ]
 
