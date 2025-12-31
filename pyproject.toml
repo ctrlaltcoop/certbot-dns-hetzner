@@ -1,0 +1,43 @@
+[project]
+name = "certbot-dns-hetzner"
+version = "2.0.3"
+description = "This certbot plugin for dns-01 challenge for Hetzner."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "certbot>=5.2.2",
+    "dns-lexicon>=3.2.23",
+    "parsedatetime>=2.6",
+    "requests>=2.32.5",
+    "requests-mock>=1.12.1",
+    "setuptools>=80.9.0",
+]
+license = "Apache-2.0"
+authors = [
+    { name = "control.alt.coop eG", email = "kontakt@control.alt.coop" },
+]
+maintainers = [
+    { name = "control.alt.coop eG", email = "kontakt@control.alt.coop" },
+]
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Environment :: Plugins',
+    'Intended Audience :: System Administrators',
+    'Operating System :: POSIX :: Linux',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
+    'Programming Language :: Python :: 3.14',
+    'Topic :: Internet :: WWW/HTTP',
+    'Topic :: Security',
+    'Topic :: System :: Installation/Setup',
+    'Topic :: System :: Networking',
+    'Topic :: System :: Systems Administration',
+    'Topic :: Utilities',
+]
+
+[project.entry-points."certbot.plugins"]
+dns-hetzner = 'certbot_dns_hetzner.dns_hetzner:Authenticator'
