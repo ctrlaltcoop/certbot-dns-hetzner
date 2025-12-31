@@ -1,0 +1,3 @@
+[submodule "dns-lexicon"]
+	path = dns-lexicon
+	url = git@github.com:fupduck/dns-lexicon.git

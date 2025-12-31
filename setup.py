@@ -13,7 +13,7 @@ install_requires = [
     'setuptools',
     'requests',
     'requests-mock',
-    'dns-lexicon @ git+https://github.com/fupduck/dns-lexicon@merge_intead_of_rebase',
+    'dns-lexicon@./dns-lexicon',
     'parsedatetime<=2.5;python_version<"3.0"'
 ]
 
