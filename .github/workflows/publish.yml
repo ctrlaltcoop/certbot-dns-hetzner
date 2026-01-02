@@ -6,13 +6,23 @@ jobs:
   publish:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
-
+    environment:
+      name: pypi
+    permissions:
+      id-token: write
+      contents: read
     steps:
-    - uses: actions/checkout@master
-    - name: Publish Python Package
-      uses: mariamrf/py-package-publish-action@v1.0.0
-      with:
-        python_version: '3.11'
-      env:
-        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          submodules: 'true'
+      - name: Setup Python
+        uses: actions/setup-python@master
+        with:
+          python-version: '3.11'
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+      - name: Build
+        run: uv build
+      - name: Publish
+        run: uv publish
