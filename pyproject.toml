@@ -1,6 +1,6 @@
 [project]
 name = "certbot-dns-hetzner"
-version = "2.0.3"
+version = "3.0.0-alpha1"
 description = "This certbot plugin for dns-01 challenge for Hetzner."
 readme = "README.md"
 requires-python = ">=3.9"
