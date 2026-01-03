@@ -13,7 +13,7 @@ install_requires = [
     'setuptools',
     'requests',
     'requests-mock',
-    'dns-lexicon>=3.11.6',
+    'dns-lexicon-coop=3.24.0',
     'parsedatetime<=2.5;python_version<"3.0"'
 ]
 
@@ -31,7 +31,7 @@ setup(
     author="ctrl.alt.coop",
     author_email='kontakt@ctrl.alt.coop',
     license='Apache-2.0',
-    python_requires='>=3.9',
+    python_requires='>=3.10',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Plugins',
@@ -43,6 +43,9 @@ setup(
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
+        'Programming Language :: Python :: 3.14',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Security',
         'Topic :: System :: Installation/Setup',
