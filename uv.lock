@@ -53,11 +53,11 @@ wheels = [
 
 [[package]]
 name = "certbot-dns-hetzner"
-version = "2.0.3"
+version = "3.0.0a1"
 source = { virtual = "." }
 dependencies = [
     { name = "certbot" },
-    { name = "dns-lexicon" },
+    { name = "dns-lexicon-coop" },
     { name = "parsedatetime" },
     { name = "requests" },
     { name = "requests-mock" },
@@ -67,7 +67,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "certbot", specifier = ">=2.0.0" },
-    { name = "dns-lexicon", specifier = ">=3.2.23" },
+    { name = "dns-lexicon-coop", specifier = ">=3.24.0" },
     { name = "parsedatetime", specifier = ">=2.6" },
     { name = "requests", specifier = ">=2.32.5" },
     { name = "requests-mock", specifier = ">=1.12.1" },
@@ -347,8 +347,8 @@ wheels = [
 ]
 
 [[package]]
-name = "dns-lexicon"
-version = "3.23.2"
+name = "dns-lexicon-coop"
+version = "3.24.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -359,9 +359,9 @@ dependencies = [
     { name = "requests" },
     { name = "tldextract" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/85/18/347d64669e77c26a61f90c7cdd83a6e7dc2af996a25f63e8d7dc902bb9ee/dns_lexicon-3.23.2.tar.gz", hash = "sha256:3c40174e9d657289d4d4f81d44451c4d63f8c26c8513e4d7a61c30ac456aab8f", size = 159434, upload-time = "2025-11-14T16:16:30.397Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/49/ce/f98660fe183f6bcf47e783f5f253637a87efa014d8699cc485228c5e8371/dns_lexicon_coop-3.24.0.tar.gz", hash = "sha256:22944b203d9d4f6039b9f1a9fbe0f8ddbb78655cab6a1b40c4214f5a0fbdf223", size = 161753, upload-time = "2026-01-02T20:18:32.007Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bf/9f/276b8a97e67271d12066f195ee3e4765f1554e03be716cb682d44ba5deb1/dns_lexicon-3.23.2-py3-none-any.whl", hash = "sha256:f0a45187244ff7b2ecb64f6a699882e09dd77d8796c57b372fe017c5fae7ce4a", size = 259877, upload-time = "2025-11-14T16:16:28.658Z" },
+    { url = "https://files.pythonhosted.org/packages/6f/77/cdaad39ddecb06faf5101eabe5acd6965dcadc970a507d1dddd15eb4cb7e/dns_lexicon_coop-3.24.0-py3-none-any.whl", hash = "sha256:3ab730d96da675a309705214ffc76c330419b17634e98b0c4ef4806f81009d7b", size = 262097, upload-time = "2026-01-02T20:18:30.528Z" },
 ]
 
 [[package]]
@@ -375,11 +375,11 @@ wheels = [
 
 [[package]]
 name = "filelock"
-version = "3.20.1"
+version = "3.20.2"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/a7/23/ce7a1126827cedeb958fc043d61745754464eb56c5937c35bbf2b8e26f34/filelock-3.20.1.tar.gz", hash = "sha256:b8360948b351b80f420878d8516519a2204b07aefcdcfd24912a5d33127f188c", size = 19476, upload-time = "2025-12-15T23:54:28.027Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c1/e0/a75dbe4bca1e7d41307323dad5ea2efdd95408f74ab2de8bd7dba9b51a1a/filelock-3.20.2.tar.gz", hash = "sha256:a2241ff4ddde2a7cebddf78e39832509cb045d18ec1a09d7248d6bfc6bfbbe64", size = 19510, upload-time = "2026-01-02T15:33:32.582Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e3/7f/a1a97644e39e7316d850784c642093c99df1290a460df4ede27659056834/filelock-3.20.1-py3-none-any.whl", hash = "sha256:15d9e9a67306188a44baa72f569d2bfd803076269365fdea0934385da4dc361a", size = 16666, upload-time = "2025-12-15T23:54:26.874Z" },
+    { url = "https://files.pythonhosted.org/packages/9a/30/ab407e2ec752aa541704ed8f93c11e2a5d92c168b8a755d818b74a3c5c2d/filelock-3.20.2-py3-none-any.whl", hash = "sha256:fbba7237d6ea277175a32c54bb71ef814a8546d8601269e1bfc388de333974e8", size = 16697, upload-time = "2026-01-02T15:33:31.133Z" },
 ]
 
 [[package]]

@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "certbot>=2.0.0",
-    "dns-lexicon>=3.2.23",
+    "dns-lexicon-coop>=3.24.0",
     "parsedatetime>=2.6",
     "requests>=2.32.5",
     "requests-mock>=1.12.1",
