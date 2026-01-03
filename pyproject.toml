@@ -3,7 +3,7 @@ name = "certbot-dns-hetzner"
 version = "3.0.0-alpha1"
 description = "This certbot plugin for dns-01 challenge for Hetzner."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "certbot>=2.0.0",
     "dns-lexicon>=3.2.23",
@@ -26,7 +26,6 @@ classifiers = [
     'Operating System :: POSIX :: Linux',
     'Programming Language :: Python',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
     'Programming Language :: Python :: 3.12',
