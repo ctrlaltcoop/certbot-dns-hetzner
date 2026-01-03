@@ -17,7 +17,7 @@ jobs:
         with:
           submodules: 'true'
       - name: Check tag in pyproject.toml
-        run: cat pyproject.toml | grep version | grep $GITHUB_REF_NAME
+        run: cat pyproject.toml | grep version | grep ${GITHUB_REF_NAME:1}
       - name: Setup Python
         uses: actions/setup-python@master
         with:
