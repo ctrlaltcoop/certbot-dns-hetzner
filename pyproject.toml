@@ -38,6 +38,11 @@ classifiers = [
     'Topic :: System :: Systems Administration',
     'Topic :: Utilities',
 ]
+readme = 'README.md'
+
+[project.urls]
+Github = https://github.com/ctrlaltcoop/certbot-dns-hetzner
+
 
 [project.entry-points."certbot.plugins"]
 dns-hetzner = 'certbot_dns_hetzner.dns_hetzner:Authenticator'
