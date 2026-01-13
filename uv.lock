@@ -53,7 +53,7 @@ wheels = [
 
 [[package]]
 name = "certbot-dns-hetzner"
-version = "3.0.0a2"
+version = "3.0.0a3"
 source = { virtual = "." }
 dependencies = [
     { name = "certbot" },
@@ -67,7 +67,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "certbot", specifier = ">=2.0.0" },
-    { name = "dns-lexicon-coop", specifier = ">=3.24.1" },
+    { name = "dns-lexicon-coop", specifier = ">=3.24.2" },
     { name = "parsedatetime", specifier = ">=2.6" },
     { name = "requests", specifier = ">=2.32.5" },
     { name = "requests-mock", specifier = ">=1.12.1" },
@@ -348,7 +348,7 @@ wheels = [
 
 [[package]]
 name = "dns-lexicon-coop"
-version = "3.24.1"
+version = "3.24.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -359,9 +359,9 @@ dependencies = [
     { name = "requests" },
     { name = "tldextract" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ee/d6/9ae9ec315f4ee2af2306f9d9f04113473613f3f409baad6827529aaccbce/dns_lexicon_coop-3.24.1.tar.gz", hash = "sha256:41a0a6e16fa73808fdf28f0322f8cea483620081ae23d24dff4838cc2036fb4b", size = 161767, upload-time = "2026-01-06T16:41:57.974Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5b/52/1b055da285f577c22e5b04c51ed1ab63a6562e870f0e80b83421ea104f4c/dns_lexicon_coop-3.24.2.tar.gz", hash = "sha256:65b21c86fe0a22b80301c220369e0908c4c0b69cca8ca2616771d60c63c78b36", size = 161748, upload-time = "2026-01-13T14:28:58.339Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e6/81/f09dd573ef319527e9885550766c80b243efbc934c51d28039058e1f43dd/dns_lexicon_coop-3.24.1-py3-none-any.whl", hash = "sha256:5460df20714c21e0e0c25a5296f3bdb0624e20ab944cc6f33a466a1c818d0507", size = 262104, upload-time = "2026-01-06T16:41:56.461Z" },
+    { url = "https://files.pythonhosted.org/packages/f5/9e/7bf8cac11ef3fe3ed428f4cd02b2ab5977b4f1ead61a539faa3b72b569cd/dns_lexicon_coop-3.24.2-py3-none-any.whl", hash = "sha256:1d7ddc0d3dd035223695a8bb9e19ed4e8c25ad0bef04f694df93c07b8daf078a", size = 262056, upload-time = "2026-01-13T14:28:57.064Z" },
 ]
 
 [[package]]
