@@ -6,7 +6,7 @@
 
 This certbot plugin automates the process of
 completing a dns-01 challenge by creating, and
-subsequently removing, TXT records using the Hetzner DNS API.
+subsequently removing, TXT records using the Hetzner DNS or cloud API.
 
 ## Requirements
 
@@ -24,7 +24,7 @@ pip install certbot-dns-hetzner
 
 ## Usage
 
-To start using DNS authentication for the Hetzner DNS API, pass the following arguments on certbot's command line:
+To start using DNS authentication for the Hetzner DNS or cloud API, pass the following arguments on certbot's command line:
 
 | Option                                                     | Description                                      |
 |------------------------------------------------------------|--------------------------------------------------|
@@ -32,8 +32,10 @@ To start using DNS authentication for the Hetzner DNS API, pass the following ar
 | `--dns-hetzner-credentials`                                | Hetzner DNS API credentials INI file. (Required) |
 | `--dns-hetzner-propagation-seconds`                        | Seconds to wait for the TXT record to propagate  |
 
-## Credentials
+Depending on the given credential either the old DNS API or the new cloud API will be used.  
+Note: Make sure to use the correct credentials for the different domains. Only one API is working for one domain.
 
+## Credentials
 
 From the hetzner DNS control panel at https://dns.hetzner.com go to "API Tokens" and add a personal access token.  
 Please make sure to use the absolute path - some users experienced problems with relative paths.  
@@ -59,15 +61,19 @@ To acquire a certificate for ``*.example.com``
      --dns-hetzner-credentials /path/to/my/hetzner.ini \\
      -d '*.example.com'
 ```
-     
+
 ## Troubleshooting
 
 ### Plugin not showing up
 If `certbot plugins` does not show the installed plugin, you might need to set `CERTBOT_PLUGIN_PATH`.  
 ```
-CERTBOT_PLUGIN_PATH=/usr/local/lib/python3.9/site-packages/ certbot renew
+CERTBOT_PLUGIN_PATH=/usr/local/lib/python3.X/site-packages/ certbot renew
 ```  
 [See letsencrypt community thread](https://community.letsencrypt.org/t/how-do-i-make-certbot-find-use-an-installed-plugin/198647/5)
+
+### Encountered exception during recovery: requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://dns.hetzner.com/api/v1/zones?name=<MYDOMAIN>
+You are using an old token and try to update a domain already migrated to the cloud API.  
+Please update the credentials.
 
 ### Renewing certificate fails
 Please ensure to use an absolute path for the credentials file - some users experienced problems with relative paths.
