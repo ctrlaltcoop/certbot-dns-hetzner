@@ -32,8 +32,10 @@ To start using DNS authentication for the Hetzner DNS or cloud API, pass the fol
 | `--dns-hetzner-credentials`                                | Hetzner DNS API credentials INI file. (Required) |
 | `--dns-hetzner-propagation-seconds`                        | Seconds to wait for the TXT record to propagate  |
 
-Depending on the given credential either the old DNS API or the new cloud API will be used.  
+Starting version 3.x depending on the given credential either the old DNS API or the new cloud API will be used.  
 Note: Make sure to use the correct credentials for the different domains. Only one API is working for one domain.
+
+Pre 3.x only the Hetzner DNS API is supported.
 
 ## Credentials
 
