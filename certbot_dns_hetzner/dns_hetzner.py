@@ -1,5 +1,7 @@
 """DNS Authenticator for Hetzner DNS."""
+
 import logging
+
 import tldextract
 from certbot import errors
 from certbot.plugins import dns_common
@@ -7,7 +9,7 @@ from lexicon.client import Client
 from lexicon.config import ConfigResolver
 
 logger = logging.getLogger(__name__)
-
+_TLD_EXTRACT = tldextract.TLDExtract()
 TTL = 60
 
 
@@ -25,7 +27,7 @@ class Authenticator(dns_common.DNSAuthenticator):
         self.credentials = None
 
     @classmethod
-    def add_parser_arguments(cls, add, default_propagation_seconds = 60):
+    def add_parser_arguments(cls, add, default_propagation_seconds=60):
         super(Authenticator, cls).add_parser_arguments(
             add, default_propagation_seconds=default_propagation_seconds
         )
@@ -48,28 +50,17 @@ class Authenticator(dns_common.DNSAuthenticator):
 
     @staticmethod
     def _get_zone(domain):
-        """Extract the zone (registrable domain) from a given domain name.
-        
-        Args:
-            domain: The domain name to extract the zone from.
-            
-        Returns:
-            The zone (e.g., 'example.com' from 'sub.example.com').
-            
-        Raises:
-            errors.PluginError: If the domain cannot be parsed or has no valid zone.
-        """
-        extract = tldextract.TLDExtract()
-        zone_name = extract(domain, include_psl_private_domains=True)
-        
+        """Extract the zone (registrable domain) from a given domain name."""
+        zone_name = _TLD_EXTRACT(domain, include_psl_private_domains=True)
+
         if not zone_name.domain or not zone_name.suffix:
             raise errors.PluginError(
-                f"Could not extract valid zone from domain: {domain}. "
+                f"Could not extract valid zone from domain={domain!r}. "
                 f"Ensure the domain is a valid FQDN."
             )
-        
-        zone = '.'.join([zone_name.domain, zone_name.suffix])
-        logger.debug("Extracted zone '%s' from domain '%s'", zone, domain)
+
+        zone = ".".join([zone_name.domain, zone_name.suffix])
+        logger.debug("Extracted zone '%s' from domain=%r", zone, domain)
         return zone
 
     def _perform(self, domain, validation_name, validation):
@@ -81,15 +72,16 @@ class Authenticator(dns_common.DNSAuthenticator):
             client.delete_record(None, "TXT", self._fqdn_format(validation_name), validation)
 
     def _get_hetzner_client(self, domain):
-        config = ConfigResolver().with_env().with_dict({
-            "provider_name": "hetzner",
-            "hetzner": {
-                "auth_token": self.credentials.conf("api_token")
-            },
-
-            "ttl": TTL,
-            "domain": self._get_zone(domain),
-        })
+        config = ConfigResolver().with_env().with_dict(
+            {
+                "provider_name": "hetzner",
+                "hetzner": {
+                    "auth_token": self.credentials.conf("api_token")
+                },
+                "ttl": TTL,
+                "domain": self._get_zone(domain),
+            }
+        )
         return Client(config)
 
     @staticmethod
