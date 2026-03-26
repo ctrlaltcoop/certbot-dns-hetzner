@@ -1,8 +1,12 @@
 """DNS Authenticator for Hetzner DNS."""
+import logging
 import tldextract
+from certbot import errors
 from certbot.plugins import dns_common
 from lexicon.client import Client
 from lexicon.config import ConfigResolver
+
+logger = logging.getLogger(__name__)
 
 TTL = 60
 
@@ -44,9 +48,29 @@ class Authenticator(dns_common.DNSAuthenticator):
 
     @staticmethod
     def _get_zone(domain):
+        """Extract the zone (registrable domain) from a given domain name.
+        
+        Args:
+            domain: The domain name to extract the zone from.
+            
+        Returns:
+            The zone (e.g., 'example.com' from 'sub.example.com').
+            
+        Raises:
+            errors.PluginError: If the domain cannot be parsed or has no valid zone.
+        """
         extract = tldextract.TLDExtract()
         zone_name = extract(domain, include_psl_private_domains=True)
-        return '.'.join([zone_name.domain, zone_name.suffix])
+        
+        if not zone_name.domain or not zone_name.suffix:
+            raise errors.PluginError(
+                f"Could not extract valid zone from domain: {domain}. "
+                f"Ensure the domain is a valid FQDN."
+            )
+        
+        zone = '.'.join([zone_name.domain, zone_name.suffix])
+        logger.debug("Extracted zone '%s' from domain '%s'", zone, domain)
+        return zone
 
     def _perform(self, domain, validation_name, validation):
         with self._get_hetzner_client(domain) as client:
