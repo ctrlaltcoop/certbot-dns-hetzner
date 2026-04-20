@@ -74,7 +74,7 @@ class Authenticator(dns_common.DNSAuthenticator):
             )
             action.wait_until_finished()
         except APIException as apiException:
-            raise PluginError("ASDF")
+            raise PluginError(apiException)
 
     def _cleanup(self, domain, validation_name, validation):
         client = self._get_hetzner_client()
@@ -90,7 +90,7 @@ class Authenticator(dns_common.DNSAuthenticator):
             )
             action.wait_until_finished()
         except APIException as apiException:
-            raise PluginError("ASDF")
+            raise PluginError(apiException)
 
     def _get_hetzner_client(self):
         return Client(token=self.credentials.conf("api_token"))
