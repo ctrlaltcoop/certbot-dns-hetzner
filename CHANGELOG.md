@@ -3,6 +3,7 @@
 ## 4.0.0
 
 * use hcloud instead of dns-lexicon (only support Hetzner Cloud API)
+* Raise PluginException on wrong or missing zone
 
 ## 3.0.0
 
