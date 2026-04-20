@@ -3,6 +3,7 @@
 
 import unittest
 
+from certbot.errors import PluginError
 from certbot_dns_hetzner.dns_hetzner import Authenticator
 
 
