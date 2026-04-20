@@ -79,15 +79,18 @@ class Authenticator(dns_common.DNSAuthenticator):
     def _cleanup(self, domain, validation_name, validation):
         client = self._get_hetzner_client()
         zone_name = self._get_zone(domain)
-        action = client.zones.remove_rrset_records(
-            rrset=ZoneRRSet(
-                zone=Zone(name=zone_name),
-                name=self._get_relative_name(validation_name, zone_name),
-                type="TXT",
-            ),
-            records=[ZoneRecord(value=f'"{validation}"')],
-        )
-        action.wait_until_finished()
+        try:
+            action = client.zones.remove_rrset_records(
+                rrset=ZoneRRSet(
+                    zone=Zone(name=zone_name),
+                    name=self._get_relative_name(validation_name, zone_name),
+                    type="TXT",
+                ),
+                records=[ZoneRecord(value=f'"{validation}"')],
+            )
+            action.wait_until_finished()
+        except APIException as apiException:
+            raise PluginError(apiException)
 
     def _get_hetzner_client(self):
         return Client(token=self.credentials.conf("api_token"))
