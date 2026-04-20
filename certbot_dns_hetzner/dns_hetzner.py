@@ -1,9 +1,12 @@
 """DNS Authenticator for Hetzner DNS."""
 
 import tldextract
+from certbot.errors import PluginError
 from certbot.plugins import dns_common
 from hcloud import Client
 from hcloud.zones import Zone, ZoneRecord, ZoneRRSet
+
+_TLD_EXTRACT = tldextract.TLDExtract()
 
 
 class Authenticator(dns_common.DNSAuthenticator):
@@ -36,8 +39,15 @@ class Authenticator(dns_common.DNSAuthenticator):
 
     @staticmethod
     def _get_zone(domain):
-        extract = tldextract.TLDExtract()
-        zone_name = extract(domain, include_psl_private_domains=True)
+        """Extract the zone (registrable domain) from a given domain name."""
+        zone_name = _TLD_EXTRACT(domain, include_psl_private_domains=True)
+
+        if not zone_name.domain or not zone_name.suffix:
+            raise PluginError(
+                f"Could not extract valid zone from domain={domain!r}. "
+                f"Ensure the domain is a valid FQDN."
+            )
+
         return ".".join([zone_name.domain, zone_name.suffix])
 
     @staticmethod
