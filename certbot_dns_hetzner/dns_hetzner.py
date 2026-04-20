@@ -3,7 +3,7 @@
 import tldextract
 from certbot.errors import PluginError
 from certbot.plugins import dns_common
-from hcloud import Client
+from hcloud import Client, APIException
 from hcloud.zones import Zone, ZoneRecord, ZoneRRSet
 
 _TLD_EXTRACT = tldextract.TLDExtract(include_psl_private_domains=True)
@@ -62,16 +62,19 @@ class Authenticator(dns_common.DNSAuthenticator):
     def _perform(self, domain, validation_name, validation):
         client = self._get_hetzner_client()
         zone_name = self._get_zone(domain)
-        action = client.zones.add_rrset_records(
-            rrset=ZoneRRSet(
-                zone=Zone(name=zone_name),
-                name=self._get_relative_name(validation_name, zone_name),
-                type="TXT",
-            ),
-            ttl=60,
-            records=[ZoneRecord(value=f'"{validation}"')],
-        )
-        action.wait_until_finished()
+        try:
+            action = client.zones.add_rrset_records(
+                rrset=ZoneRRSet(
+                    zone=Zone(name=zone_name),
+                    name=self._get_relative_name(validation_name, zone_name),
+                    type="TXT",
+                ),
+                ttl=60,
+                records=[ZoneRecord(value=f'"{validation}"')],
+            )
+            action.wait_until_finished()
+        except APIException as apiException:
+            raise PluginError(apiException)
 
     def _cleanup(self, domain, validation_name, validation):
         client = self._get_hetzner_client()
