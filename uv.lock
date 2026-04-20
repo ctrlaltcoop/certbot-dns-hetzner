@@ -40,7 +40,7 @@ wheels = [
 
 [[package]]
 name = "certbot-dns-hetzner"
-version = "4.0.0a0"
+version = "4.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "certbot" },
