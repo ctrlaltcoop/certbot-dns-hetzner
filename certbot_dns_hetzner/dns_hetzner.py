@@ -6,7 +6,7 @@ from certbot.plugins import dns_common
 from hcloud import Client
 from hcloud.zones import Zone, ZoneRecord, ZoneRRSet
 
-_TLD_EXTRACT = tldextract.TLDExtract()
+_TLD_EXTRACT = tldextract.TLDExtract(include_psl_private_domains=True)
 
 
 class Authenticator(dns_common.DNSAuthenticator):
@@ -40,7 +40,7 @@ class Authenticator(dns_common.DNSAuthenticator):
     @staticmethod
     def _get_zone(domain):
         """Extract the zone (registrable domain) from a given domain name."""
-        zone_name = _TLD_EXTRACT(domain, include_psl_private_domains=True)
+        zone_name = _TLD_EXTRACT(domain)
 
         if not zone_name.domain or not zone_name.suffix:
             raise PluginError(
