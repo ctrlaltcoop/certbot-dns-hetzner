@@ -1,16 +1,12 @@
 """DNS Authenticator for Hetzner DNS."""
 
-import logging
-
 import tldextract
-from certbot import errors
+from certbot.errors import PluginError
 from certbot.plugins import dns_common
-from lexicon.client import Client
-from lexicon.config import ConfigResolver
+from hcloud import Client
+from hcloud.zones import Zone, ZoneRecord, ZoneRRSet
 
-logger = logging.getLogger(__name__)
 _TLD_EXTRACT = tldextract.TLDExtract()
-TTL = 60
 
 
 class Authenticator(dns_common.DNSAuthenticator):
@@ -18,9 +14,7 @@ class Authenticator(dns_common.DNSAuthenticator):
     This Authenticator uses the Hetzner DNS API to fulfill a dns-01 challenge.
     """
 
-    description = (
-        "Obtain certificates using a DNS TXT record (if you are using Hetzner for DNS)."
-    )
+    description = "Obtain certificates using a DNS TXT record (if you are using Hetzner for DNS)."
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -28,23 +22,18 @@ class Authenticator(dns_common.DNSAuthenticator):
 
     @classmethod
     def add_parser_arguments(cls, add, default_propagation_seconds=60):
-        super(Authenticator, cls).add_parser_arguments(
-            add, default_propagation_seconds=default_propagation_seconds
-        )
+        super(Authenticator, cls).add_parser_arguments(add, default_propagation_seconds=default_propagation_seconds)
         add("credentials", help="Hetzner credentials INI file.")
 
     def more_info(self):  # pylint: disable=missing-function-docstring
-        return (
-            "This plugin configures a DNS TXT record to respond to a dns-01 challenge using "
-            + "the Hetzner API."
-        )
+        return "This plugin configures a DNS TXT record to respond to a dns-01 challenge using the Hetzner API."
 
     def _setup_credentials(self):
         self.credentials = self._configure_credentials(
             "credentials",
             "Hetzner credentials INI file",
             {
-                "api_token": "Hetzner API Token from 'https://dns.hetzner.com/settings/api-token'",
+                "api_token": "Hetzner Cloud API Token from 'https://console.hetzner.com/projects/{id}/security/tokens'",
             },
         )
 
@@ -54,38 +43,48 @@ class Authenticator(dns_common.DNSAuthenticator):
         zone_name = _TLD_EXTRACT(domain, include_psl_private_domains=True)
 
         if not zone_name.domain or not zone_name.suffix:
-            raise errors.PluginError(
+            raise PluginError(
                 f"Could not extract valid zone from domain={domain!r}. "
                 f"Ensure the domain is a valid FQDN."
             )
 
-        zone = ".".join([zone_name.domain, zone_name.suffix])
-        logger.debug("Extracted zone '%s' from domain=%r", zone, domain)
-        return zone
-
-    def _perform(self, domain, validation_name, validation):
-        with self._get_hetzner_client(domain) as client:
-            client.create_record("TXT", self._fqdn_format(validation_name), validation)
-
-    def _cleanup(self, domain, validation_name, validation):
-        with self._get_hetzner_client(domain) as client:
-            client.delete_record(None, "TXT", self._fqdn_format(validation_name), validation)
-
-    def _get_hetzner_client(self, domain):
-        config = ConfigResolver().with_env().with_dict(
-            {
-                "provider_name": "hetzner",
-                "hetzner": {
-                    "auth_token": self.credentials.conf("api_token")
-                },
-                "ttl": TTL,
-                "domain": self._get_zone(domain),
-            }
-        )
-        return Client(config)
+        return ".".join([zone_name.domain, zone_name.suffix])
 
     @staticmethod
-    def _fqdn_format(name):
-        if not name.endswith("."):
-            return f"{name}."
-        return name
+    def _get_relative_name(validation_name, zone_name):
+        """Strips the zone name from the FQDN to get the relative record name."""
+        if validation_name == zone_name:
+            return "@"
+        if validation_name.endswith("." + zone_name):
+            return validation_name[: -(len("." + zone_name))]
+        return validation_name
+
+    def _perform(self, domain, validation_name, validation):
+        client = self._get_hetzner_client()
+        zone_name = self._get_zone(domain)
+        action = client.zones.add_rrset_records(
+            rrset=ZoneRRSet(
+                zone=Zone(name=zone_name),
+                name=self._get_relative_name(validation_name, zone_name),
+                type="TXT",
+            ),
+            ttl=60,
+            records=[ZoneRecord(value=f'"{validation}"')],
+        )
+        action.wait_until_finished()
+
+    def _cleanup(self, domain, validation_name, validation):
+        client = self._get_hetzner_client()
+        zone_name = self._get_zone(domain)
+        action = client.zones.remove_rrset_records(
+            rrset=ZoneRRSet(
+                zone=Zone(name=zone_name),
+                name=self._get_relative_name(validation_name, zone_name),
+                type="TXT",
+            ),
+            records=[ZoneRecord(value=f'"{validation}"')],
+        )
+        action.wait_until_finished()
+
+    def _get_hetzner_client(self):
+        return Client(token=self.credentials.conf("api_token"))
