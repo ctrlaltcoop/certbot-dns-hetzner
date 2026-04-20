@@ -73,8 +73,8 @@ class Authenticator(dns_common.DNSAuthenticator):
                 records=[ZoneRecord(value=f'"{validation}"')],
             )
             action.wait_until_finished()
-        except APIException as apiException:
-            raise PluginError(apiException)
+        except APIException as api_exception:
+            raise PluginError(api_exception)
 
     def _cleanup(self, domain, validation_name, validation):
         client = self._get_hetzner_client()
@@ -89,8 +89,8 @@ class Authenticator(dns_common.DNSAuthenticator):
                 records=[ZoneRecord(value=f'"{validation}"')],
             )
             action.wait_until_finished()
-        except APIException as apiException:
-            raise PluginError(apiException)
+        except APIException as api_exception:
+            raise PluginError(api_exception)
 
     def _get_hetzner_client(self):
         return Client(token=self.credentials.conf("api_token"))
