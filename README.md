@@ -83,5 +83,5 @@ Feel free to start a new snap package yourself - we would happily link it here.
 
 Of course certbot, which examples and documentation I used to implement this plugin. And to https://github.com/m42e/certbot-dns-ispconfig which served as an excellent example and README template as well.
 
-and of course to [all contributors](https://github.com/ctrlaltcoop/certbot-dns-hetzner/graphs/contributors)
+and of course to [all contributors](https://github.com/ctrlaltcoop/certbot-dns-hetzner/graphs/contributors) and people raising [issues](https://github.com/ctrlaltcoop/certbot-dns-hetzner/issues).
 
