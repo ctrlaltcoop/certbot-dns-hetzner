@@ -87,4 +87,5 @@ Feel free to start a new snap package yourself - we would happily link it here.
 ## Thanks to
 
 Of course certbot, which examples and documentation I used to implement this plugin. And to https://github.com/m42e/certbot-dns-ispconfig which served as an excellent example and README template as well.
+And to [gsilvan](https://github.com/gsilvan) for migrating this plugin to [hcloud](https://github.com/hetznercloud/hcloud-python).
 
