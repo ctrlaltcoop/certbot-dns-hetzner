@@ -32,24 +32,16 @@ class AuthenticatorTest(unittest.TestCase):
         )
 
     def test_get_zone_valid_domain(self):
-        from certbot_dns_hetzner.dns_hetzner import Authenticator  # pylint: disable=import-outside-toplevel
-
         self.assertEqual(Authenticator._get_zone("example.com"), "example.com")
 
     def test_get_zone_valid_subdomain(self):
-        from certbot_dns_hetzner.dns_hetzner import Authenticator  # pylint: disable=import-outside-toplevel
-
         self.assertEqual(Authenticator._get_zone("sub.example.com"), "example.com")
 
     def test_get_zone_invalid_domain_raises(self):
-        from certbot_dns_hetzner.dns_hetzner import Authenticator  # pylint: disable=import-outside-toplevel
-
         with self.assertRaises(PluginError):
             Authenticator._get_zone("invalid")
 
     def test_get_zone_empty_domain_raises(self):
-        from certbot_dns_hetzner.dns_hetzner import Authenticator  # pylint: disable=import-outside-toplevel
-
         with self.assertRaises(PluginError):
             Authenticator._get_zone("")
 
